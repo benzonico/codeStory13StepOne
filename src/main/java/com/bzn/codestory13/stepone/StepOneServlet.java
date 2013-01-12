@@ -18,6 +18,7 @@ public class StepOneServlet extends HttpServlet {
 	
 	public static final String EMAIL_NPERU = "nicolas.peru@gmail.com";
 	public static final String OUI = "OUI";
+	public static final String NON = "NON";
 
 
 	@Override
@@ -55,7 +56,7 @@ public class StepOneServlet extends HttpServlet {
 			if(emailMatcher.matches()){
 				result = EMAIL_NPERU;
 			}else if(mailingListMatcher.matches()){
-				result = OUI;
+				result = NON;
 			}
 		}
 		return result;

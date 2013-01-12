@@ -23,7 +23,7 @@ public class StepOneServletTest {
 	public void mailingListQuestionShouldReturnOUI() throws Exception {
 		StepOneServlet servlet = new StepOneServlet();
 		String response = servlet.handleQuestion(StepOneServlet.MAILING_LIST_QUESTION);
-		assertThat(response).isEqualTo(StepOneServlet.OUI);
+		assertThat(response).isEqualTo(StepOneServlet.NON);
 	}
 
 }
