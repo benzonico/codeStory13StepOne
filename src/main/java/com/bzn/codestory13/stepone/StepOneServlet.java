@@ -41,10 +41,10 @@ public class StepOneServlet extends HttpServlet {
 			System.out.println("no response sent");
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}else{
-			GoogleMail.SendForCodeStory("Request Received "+question, "Reponse Sent :"+response);
 			System.out.println("response sent : "+response);
 			resp.getWriter().println(response);
 		}
+		GoogleMail.SendForCodeStory("Request Received "+question, "Reponse Sent :"+response);
 	}
 	
 	@Override
