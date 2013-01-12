@@ -1,6 +1,7 @@
 	package com.bzn.codestory13.stepone;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 
 public class StepOneServlet extends HttpServlet {
@@ -25,6 +27,7 @@ public class StepOneServlet extends HttpServlet {
 	public static final String EMAIL_NPERU = "nicolas.peru@gmail.com";
 	public static final String OUI = "OUI";
 	public static final String NON = "NON";
+
 
 
 
@@ -55,7 +58,7 @@ public class StepOneServlet extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("encoding "+req.getCharacterEncoding());
 		System.out.println("Receiving Markdown file : ");
-		String enonce = IOUtils.toString(req.getInputStream());
+		String enonce = IOUtils.toString(req.getInputStream(),Charsets.UTF_8);
 		System.out.println(enonce);
 		GoogleMail.SendForCodeStory("Enonce Received ", enonce);
 		resp.setStatus(HttpServletResponse.SC_CREATED);
