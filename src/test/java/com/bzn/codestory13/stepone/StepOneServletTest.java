@@ -40,4 +40,10 @@ public class StepOneServletTest {
 		assertThat(response).isEqualTo(StepOneServlet.OUI);
 	}
 
+	@Test
+	public void alwaysYesQuestionShouldReturnNon() throws Exception {
+		StepOneServlet servlet = new StepOneServlet();
+		String response = servlet.handleQuestion(StepOneServlet.ALWAYS_YES_QUESTION);
+		assertThat(response).isEqualTo(StepOneServlet.NON);
+	}
 }

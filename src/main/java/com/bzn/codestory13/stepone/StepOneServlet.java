@@ -19,10 +19,12 @@ public class StepOneServlet extends HttpServlet {
 	public static final String MAILING_LIST_QUESTION = "Es tu abonne a la mailing list(OUI/NON)";
 	public static final String HAPPY_QUESTION = "Es tu heureux de participer(OUI/NON)";
 	public static final String POST_MD_QUESTION = "Es tu pret a recevoir une enonce au format markdown par http post(OUI/NON)";
+	public static final String ALWAYS_YES_QUESTION = "Est ce que tu reponds toujours oui(OUI/NON)";
 	
 	public static final String EMAIL_NPERU = "nicolas.peru@gmail.com";
 	public static final String OUI = "OUI";
 	public static final String NON = "NON";
+
 
 
 
@@ -61,6 +63,7 @@ public class StepOneServlet extends HttpServlet {
 			Matcher mailingListMatcher = Pattern.compile(Pattern.quote(MAILING_LIST_QUESTION)).matcher(question);
 			Matcher happyMatcher = Pattern.compile(Pattern.quote(HAPPY_QUESTION)).matcher(question);
 			Matcher postMDMatcher = Pattern.compile(Pattern.quote(POST_MD_QUESTION)).matcher(question);
+			Matcher alwaysYesMatcher = Pattern.compile(Pattern.quote(ALWAYS_YES_QUESTION)).matcher(question);
 			if(emailMatcher.matches()){
 				result = EMAIL_NPERU;
 			}else if(mailingListMatcher.matches()){
@@ -69,6 +72,8 @@ public class StepOneServlet extends HttpServlet {
 				result = OUI;
 			}else if(postMDMatcher.matches()){
 				result = OUI;
+			}else if(alwaysYesMatcher.matches()){
+				result = NON;
 			}
 		}
 		return result;
