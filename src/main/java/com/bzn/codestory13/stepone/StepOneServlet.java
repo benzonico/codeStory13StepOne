@@ -39,12 +39,12 @@ public class StepOneServlet extends HttpServlet {
 			throws IOException {
 		String question = req.getParameter("q");
 		System.out.println("Request received with question : "+question);
-		GoogleMail.SendForCodeStory("Request Received "+question, question);
 		String response = handleQuestion(question);
 		if(response==null){
 			System.out.println("no response sent");
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}else{
+			GoogleMail.SendForCodeStory("Request Received "+question, "Reponse Sent :"+response);
 			System.out.println("response sent : "+response);
 			resp.getWriter().println(response);
 		}
@@ -55,7 +55,7 @@ public class StepOneServlet extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("encoding "+req.getCharacterEncoding());
 		System.out.println("Receiving Markdown file : ");
-		String enonce = IOUtils.toString(req.getInputStream(),req.getCharacterEncoding());
+		String enonce = IOUtils.toString(req.getInputStream());
 		System.out.println(enonce);
 		GoogleMail.SendForCodeStory("Enonce Received ", enonce);
 		resp.setStatus(HttpServletResponse.SC_CREATED);
