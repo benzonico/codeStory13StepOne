@@ -32,6 +32,7 @@ public class StepOneServlet extends HttpServlet {
 		System.out.println("Request received with question : "+question);
 		String response = handleQuestion(question);
 		if(response==null){
+			System.out.println("no response sent");
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}else{
 			System.out.println("response sent : "+response);
