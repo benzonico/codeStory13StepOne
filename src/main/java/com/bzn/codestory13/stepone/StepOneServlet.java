@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
+
 public class StepOneServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -6871516696997178809L;
@@ -16,10 +18,12 @@ public class StepOneServlet extends HttpServlet {
 	public static final String EMAIL_QUESTION = "Quelle est ton adresse email";
 	public static final String MAILING_LIST_QUESTION = "Es tu abonne a la mailing list(OUI/NON)";
 	public static final String HAPPY_QUESTION = "Es tu heureux de participer(OUI/NON)";
+	public static final String POST_MD_QUESTION = "Es tu pret a recevoir une enonce au format markdown par http post(OUI/NON)";
 	
 	public static final String EMAIL_NPERU = "nicolas.peru@gmail.com";
 	public static final String OUI = "OUI";
 	public static final String NON = "NON";
+
 
 
 	@Override
@@ -45,7 +49,8 @@ public class StepOneServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		receiveRequest(req, resp);
+		System.out.println("Receiving Markdown file : ");
+		System.out.println(IOUtils.toString(req.getInputStream(),req.getCharacterEncoding()));
 		resp.setStatus(HttpServletResponse.SC_CREATED);
 	}
 	
@@ -54,12 +59,15 @@ public class StepOneServlet extends HttpServlet {
 		if(question!=null){
 			Matcher emailMatcher = Pattern.compile(EMAIL_QUESTION).matcher(question);
 			Matcher mailingListMatcher = Pattern.compile(Pattern.quote(MAILING_LIST_QUESTION)).matcher(question);
-			Matcher happyMatcher = Pattern.compile(Pattern.quote(HAPPY_QUESTION)).matcher(question);;
+			Matcher happyMatcher = Pattern.compile(Pattern.quote(HAPPY_QUESTION)).matcher(question);
+			Matcher postMDMatcher = Pattern.compile(Pattern.quote(POST_MD_QUESTION)).matcher(question);
 			if(emailMatcher.matches()){
 				result = EMAIL_NPERU;
 			}else if(mailingListMatcher.matches()){
 				result = OUI;
 			}else if(happyMatcher.matches()){
+				result = OUI;
+			}else if(postMDMatcher.matches()){
 				result = OUI;
 			}
 		}

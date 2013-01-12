@@ -32,5 +32,12 @@ public class StepOneServletTest {
 		String response = servlet.handleQuestion(StepOneServlet.HAPPY_QUESTION);
 		assertThat(response).isEqualTo(StepOneServlet.OUI);
 	}
+	
+	@Test
+	public void postMDQuestionShouldReturnOUI() throws Exception {
+		StepOneServlet servlet = new StepOneServlet();
+		String response = servlet.handleQuestion(StepOneServlet.POST_MD_QUESTION);
+		assertThat(response).isEqualTo(StepOneServlet.OUI);
+	}
 
 }
