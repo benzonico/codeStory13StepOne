@@ -46,4 +46,10 @@ public class StepOneServletTest {
 		String response = servlet.handleQuestion(StepOneServlet.ALWAYS_YES_QUESTION);
 		assertThat(response).isEqualTo(StepOneServlet.NON);
 	}
+	@Test
+	public void premierEnonceQuestionShouldReturnNon() throws Exception {
+		StepOneServlet servlet = new StepOneServlet();
+		String response = servlet.handleQuestion(StepOneServlet.PREMIER_ENONCE);
+		assertThat(response).isEqualTo(StepOneServlet.NON);
+	}
 }
