@@ -51,7 +51,7 @@ public class StepOneServlet extends HttpServlet {
 		String result = null;
 		if(question!=null){
 			Matcher emailMatcher = Pattern.compile(EMAIL_QUESTION).matcher(question);
-			Matcher mailingListMatcher = Pattern.compile(MAILING_LIST_QUESTION).matcher(question);
+			Matcher mailingListMatcher = Pattern.compile(Pattern.quote(MAILING_LIST_QUESTION)).matcher(question);
 			if(emailMatcher.matches()){
 				result = EMAIL_NPERU;
 			}else if(mailingListMatcher.matches()){

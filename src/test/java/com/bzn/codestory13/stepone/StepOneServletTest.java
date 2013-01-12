@@ -19,5 +19,11 @@ public class StepOneServletTest {
 		assertThat(response).isEqualTo(StepOneServlet.EMAIL_NPERU);
 	}
 	
+	@Test
+	public void mailingListQuestionShouldReturnOUI() throws Exception {
+		StepOneServlet servlet = new StepOneServlet();
+		String response = servlet.handleQuestion(StepOneServlet.MAILING_LIST_QUESTION);
+		assertThat(response).isEqualTo(StepOneServlet.OUI);
+	}
 
 }
