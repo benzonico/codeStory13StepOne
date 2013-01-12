@@ -1,7 +1,6 @@
 	package com.bzn.codestory13.stepone;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,11 +17,6 @@ public class StepOneServlet extends HttpServlet {
 	private static final long serialVersionUID = -6871516696997178809L;
 
 	public static final String EMAIL_QUESTION = "Quelle est ton adresse email";
-	public static final String MAILING_LIST_QUESTION = "Es tu abonne a la mailing list(OUI/NON)";
-	public static final String HAPPY_QUESTION = "Es tu heureux de participer(OUI/NON)";
-	public static final String POST_MD_QUESTION = "Es tu pret a recevoir une enonce au format markdown par http post(OUI/NON)";
-	public static final String ALWAYS_YES_QUESTION = "Est ce que tu reponds toujours oui(OUI/NON)";
-	public static final String PREMIER_ENONCE = "As tu bien recu le premier enonce(OUI/NON)";
 	
 	public static final String EMAIL_NPERU = "nicolas.peru@gmail.com";
 	public static final String OUI = "OUI";
@@ -68,23 +62,10 @@ public class StepOneServlet extends HttpServlet {
 		String result = null;
 		if(question!=null){
 			Matcher emailMatcher = Pattern.compile(EMAIL_QUESTION).matcher(question);
-			Matcher mailingListMatcher = Pattern.compile(Pattern.quote(MAILING_LIST_QUESTION)).matcher(question);
-			Matcher happyMatcher = Pattern.compile(Pattern.quote(HAPPY_QUESTION)).matcher(question);
-			Matcher postMDMatcher = Pattern.compile(Pattern.quote(POST_MD_QUESTION)).matcher(question);
-			Matcher alwaysYesMatcher = Pattern.compile(Pattern.quote(ALWAYS_YES_QUESTION)).matcher(question);
-			Matcher premierMatcher = Pattern.compile(Pattern.quote(PREMIER_ENONCE)).matcher(question);
 			if(emailMatcher.matches()){
 				result = EMAIL_NPERU;
-			}else if(mailingListMatcher.matches()){
-				result = OUI;
-			}else if(happyMatcher.matches()){
-				result = OUI;
-			}else if(postMDMatcher.matches()){
-				result = OUI;
-			}else if(alwaysYesMatcher.matches()){
-				result = NON;
-			}else if(premierMatcher.matches()){
-				result = NON;
+			}else{
+				result = BinaryQuestion.Answer(question);
 			}
 			
 		}

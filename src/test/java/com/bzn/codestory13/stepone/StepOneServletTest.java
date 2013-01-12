@@ -20,36 +20,12 @@ public class StepOneServletTest {
 	}
 	
 	@Test
-	public void mailingListQuestionShouldReturnOUI() throws Exception {
+	public void BinaryQuestionShouldReturnTheirAnswer() throws Exception {
 		StepOneServlet servlet = new StepOneServlet();
-		String response = servlet.handleQuestion(StepOneServlet.MAILING_LIST_QUESTION);
-		assertThat(response).isEqualTo(StepOneServlet.OUI);
-	}
-	
-	@Test
-	public void happyQuestionShouldReturnOUI() throws Exception {
-		StepOneServlet servlet = new StepOneServlet();
-		String response = servlet.handleQuestion(StepOneServlet.HAPPY_QUESTION);
-		assertThat(response).isEqualTo(StepOneServlet.OUI);
-	}
-	
-	@Test
-	public void postMDQuestionShouldReturnOUI() throws Exception {
-		StepOneServlet servlet = new StepOneServlet();
-		String response = servlet.handleQuestion(StepOneServlet.POST_MD_QUESTION);
-		assertThat(response).isEqualTo(StepOneServlet.OUI);
-	}
-
-	@Test
-	public void alwaysYesQuestionShouldReturnNon() throws Exception {
-		StepOneServlet servlet = new StepOneServlet();
-		String response = servlet.handleQuestion(StepOneServlet.ALWAYS_YES_QUESTION);
-		assertThat(response).isEqualTo(StepOneServlet.NON);
-	}
-	@Test
-	public void premierEnonceQuestionShouldReturnNon() throws Exception {
-		StepOneServlet servlet = new StepOneServlet();
-		String response = servlet.handleQuestion(StepOneServlet.PREMIER_ENONCE);
-		assertThat(response).isEqualTo(StepOneServlet.NON);
+		for (int i = 0; i < BinaryQuestion.values().length; i++) {
+			BinaryQuestion bquestion = BinaryQuestion.values()[i];
+			String response = servlet.handleQuestion(bquestion.getQuestion());
+			assertThat(response).isEqualTo(bquestion.getAnswer());
+		}
 	}
 }
