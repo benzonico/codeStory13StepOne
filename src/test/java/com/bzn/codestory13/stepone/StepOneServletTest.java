@@ -15,7 +15,7 @@ public class StepOneServletTest {
 	@Test
 	public void emailQuestionShouldReturnMyEmail() throws Exception {
 		StepOneServlet servlet = new StepOneServlet();
-		String response = servlet.handleQuestion("Quelle est ton adresse email");
+		String response = servlet.handleQuestion(StepOneServlet.EMAIL_QUESTION);
 		assertThat(response).isEqualTo(StepOneServlet.EMAIL_NPERU);
 	}
 	
