@@ -70,6 +70,19 @@ public class EchoppeTest {
 	}
 	
 	@Test
+	public void changeOf21() throws Exception {
+		List<Change> expected = new ArrayList<Change>();
+		expected.add(new Change(21));
+		expected.add(new Change(14,1));
+		expected.add(new Change(7,2));
+		expected.add(new Change(0,3));
+		expected.add(new Change(10,0,1));
+		expected.add(new Change(3,1,1));
+		expected.add(new Change(0,0,0,1));
+		assertSizeAndContains(21, expected);
+	}
+	
+	@Test
 	public void changeOf23() throws Exception {
 		List<Change> expected = new ArrayList<Change>();
 		expected.add(new Change(23));
