@@ -23,7 +23,8 @@ public class StepOneServlet extends HttpServlet {
 	public static final String NON = "NON";
 
 
-
+//	  def countChange(money: Int, coins: List[Int]): Int = 
+//			    if(money==0) 1 else if(coins.isEmpty || money<0) 0 else countChange(money-coins.head, coins)+countChange(money, coins.tail)
 
 
 	@Override
@@ -36,15 +37,23 @@ public class StepOneServlet extends HttpServlet {
 			throws IOException {
 		String question = req.getParameter("q");
 		System.out.println("Request received with question : "+question);
-		String response = handleQuestion(question);
-		if(response==null){
-			System.out.println("no response sent");
-			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		if(question==null){
+			badRequestAnswer(resp);
 		}else{
-			System.out.println("response sent : "+response);
-			resp.getWriter().println(response);
+			String response = handleQuestion(question);
+			if(response==null){
+				badRequestAnswer(resp);
+			}else{
+				System.out.println("response sent : "+response);
+				resp.getWriter().println(response);
+			}
+			GoogleMail.SendForCodeStory("Request Received "+question, "Reponse Sent :"+response);
 		}
-		GoogleMail.SendForCodeStory("Request Received "+question, "Reponse Sent :"+response);
+	}
+	
+	private void badRequestAnswer(HttpServletResponse resp){
+		System.out.println("no response sent");
+		resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 	}
 	
 	@Override

@@ -12,6 +12,17 @@
 
   <servlet-mapping>
     <servlet-name>stepOneServlet</servlet-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+  
+   <servlet>
+    <servlet-name>scalaskel</servlet-name>
+    <servlet-class>com.bzn.codestory13.stepone.Echoppe</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>scalaskel</servlet-name>
+    <url-pattern>/scalaskel/change/*</url-pattern>
   </servlet-mapping>
 </web-app>
