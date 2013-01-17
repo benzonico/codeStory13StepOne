@@ -1,8 +1,8 @@
 package com.bzn.codestory13.stepone;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,36 +23,49 @@ public class Echoppe extends HttpServlet {
 		GoogleMail.SendForCodeStory("Change request Received "+valueToChange, "Reponse Sent :"+json);
 		resp.getWriter().println(json);
 	}
-	/*list.add(new Change(value));
-	if(Coins.bar.value<=value){
-		list.add(new Change(value-Coins.bar.value,1));
-	}
-	if(value == Coins.qix.value){
-		list.add(new Change(0,0,1));
-	}*/
-	public Set<Change> change(int value) {
+	
+	public List<Change> change(int value){
 		if(value<1 || value>100){
 			throw new IllegalArgumentException(value+" should be between 1 and 100");
 		}
-		Set<Change> initialSet = new HashSet<Change>();
-		initialSet.add(new Change(0));
-		return change(value, initialSet);
+		List<Change> list = new ArrayList<Change>();
+		list.add(new Change(value));
+		list.addAll(computeQix(value, 0));
+		
+		if(Coins.baz.value<=value){
+			int index = 1;
+			while (index*Coins.baz.value<=value) {
+				int newValue=value-index*Coins.baz.value;
+				list.add(new Change(newValue,0,0,index));
+				list.addAll(computeQix(newValue, index));
+				index++;
+			}
+		}
+		return list;
 	}
 	
-	public Set<Change> change(int value,Set<Change> changes) {
-		if(value<=0){
-			return changes;
+	private List<Change> computeBar(int value, int qix, int baz){
+		List<Change> result = new ArrayList<Change>();
+		if(Coins.bar.value<=value){
+			int index = 1;
+			while (index*Coins.bar.value<=value) {
+				result.add(new Change(value-index*Coins.bar.value,index,qix,baz));
+				index++;
+			}
 		}
-		Set<Change> result = new HashSet<Change>();
-		for(Change change : changes){
-			for (int i = 0; i < Coins.values().length; i++) {
-				Coins coin = Coins.values()[i];
-				if(coin.value<=value){
-					Set<Change> temp = new HashSet<Change>();
-					Change newChange = coin.addUniqueChange(change);
-					temp.add(newChange);
-					result.addAll(change(value-coin.value,temp));
-				}
+		return result;
+	}
+	
+	private List<Change> computeQix(int newValue, int baz){
+		List<Change> result = new ArrayList<Change>();
+		result.addAll(computeBar(newValue, 0,baz));
+		if(Coins.qix.value<=newValue){
+			
+			int indexQix = 1;
+			while (indexQix*Coins.qix.value<=newValue) {
+				result.add(new Change(newValue-indexQix*Coins.qix.value,0,indexQix,baz));
+				result.addAll(computeBar(newValue-indexQix*Coins.qix.value, indexQix,baz));
+				indexQix++;
 			}
 		}
 		return result;
