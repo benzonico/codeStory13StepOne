@@ -23,10 +23,6 @@ public class StepOneServlet extends HttpServlet {
 	public static final String NON = "NON";
 
 
-//	  def countChange(money: Int, coins: List[Int]): Int = 
-//			    if(money==0) 1 else if(coins.isEmpty || money<0) 0 else countChange(money-coins.head, coins)+countChange(money, coins.tail)
-
-
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		receiveRequest(req, resp);

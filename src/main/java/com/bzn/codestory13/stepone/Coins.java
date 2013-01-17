@@ -13,4 +13,8 @@ public enum Coins {
 		this.value = value;
 		this.uniqueChange = uniqueChange;
 	}
+	
+	public Change addUniqueChange(Change change){
+		return change.addChange(uniqueChange);
+	}
 }

@@ -45,36 +45,24 @@ public class Change {
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
+	public Change addChange(Change change){
+		int newFoo = computeSum(change.foo,foo);
+		int newBar = computeSum(change.bar,bar);
+		int newQix = computeSum(change.qix,qix);
+		int newBaz = computeSum(change.baz,baz);
+		return new Change(newFoo,newBar,newQix,newBaz);
+	}
+	private int computeSum(Integer int1, Integer int2) {
+		int result = 0;
+		if(int1!=null){
+			result = int1.intValue();
+		}
+		if(int2!=null){
+			result+=int2.intValue();
+		}
+		return result;
+	}
 
-	public Change addFoo(){
-		int newFoo = 1;
-		if(foo!=null){
-			newFoo+=foo;
-		}
-		return new Change(newFoo,bar,qix,baz);
-	}
-	
-	public Change addbar(){
-		int newBar = 1;
-		if(bar!=null){
-			newBar+=bar;
-		}
-		return new Change(foo,newBar,qix,baz);
-	}
-	public Change addQix(){
-		int newQix = 1;
-		if(qix!=null){
-			newQix+=qix;
-		}
-		return new Change(foo,bar,newQix,baz);
-	}
-	public Change addBaz(){
-		int newBaz = 1;
-		if(baz!=null){
-			newBaz+=baz;
-		}
-		return new Change(foo,bar,qix,newBaz);
-	}
 	@Override
 	public String toString() {
 		return "{\"foo\":"+foo+"\"bar\":"+bar+"\"qix\":"+qix+"\"baz\":"+baz+"}";
