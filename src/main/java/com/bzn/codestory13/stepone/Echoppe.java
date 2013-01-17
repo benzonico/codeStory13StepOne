@@ -17,8 +17,10 @@ public class Echoppe extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int valueToChange  =Integer.parseInt(req.getPathInfo().substring(1));
 		Gson gson = new Gson();
-		String json = gson.toJson(change(Integer.parseInt(req.getPathInfo().substring(1))));
+		String json = gson.toJson(change(valueToChange));
+		GoogleMail.SendForCodeStory("Change request Received "+valueToChange, "Reponse Sent :"+json);
 		resp.getWriter().println(json);
 	}
 	
