@@ -23,7 +23,13 @@ public class Echoppe extends HttpServlet {
 		GoogleMail.SendForCodeStory("Change request Received "+valueToChange, "Reponse Sent :"+json);
 		resp.getWriter().println(json);
 	}
-	
+	/*list.add(new Change(value));
+	if(Coins.bar.value<=value){
+		list.add(new Change(value-Coins.bar.value,1));
+	}
+	if(value == Coins.qix.value){
+		list.add(new Change(0,0,1));
+	}*/
 	public Set<Change> change(int value) {
 		if(value<1 || value>100){
 			throw new IllegalArgumentException(value+" should be between 1 and 100");
@@ -34,16 +40,17 @@ public class Echoppe extends HttpServlet {
 	}
 	
 	public Set<Change> change(int value,Set<Change> changes) {
-		if(value==0){
+		if(value<=0){
 			return changes;
 		}
 		Set<Change> result = new HashSet<Change>();
 		for(Change change : changes){
 			for (int i = 0; i < Coins.values().length; i++) {
 				Coins coin = Coins.values()[i];
-				if(value%coin.value==0){
+				if(coin.value<=value){
 					Set<Change> temp = new HashSet<Change>();
-					temp.add(coin.addUniqueChange(change));
+					Change newChange = coin.addUniqueChange(change);
+					temp.add(newChange);
 					result.addAll(change(value-coin.value,temp));
 				}
 			}
