@@ -30,21 +30,21 @@ public class Echoppe extends HttpServlet {
 		}
 		List<Change> list = new ArrayList<Change>();
 		list.add(new Change(value));
-		list.addAll(computeQix(value, 0));
 		
+		list.addAll(computeQixGivenBaz(value, 0));
 		if(Coins.baz.value<=value){
-			int index = 1;
-			while (index*Coins.baz.value<=value) {
-				int newValue=value-index*Coins.baz.value;
-				list.add(new Change(newValue,0,0,index));
-				list.addAll(computeQix(newValue, index));
-				index++;
+			int nbBaz = 1;
+			while (nbBaz*Coins.baz.value<=value) {
+				int newValue=value-nbBaz*Coins.baz.value;
+				list.add(new Change(newValue,0,0,nbBaz));
+				list.addAll(computeQixGivenBaz(newValue, nbBaz));
+				nbBaz++;
 			}
 		}
 		return list;
 	}
 	
-	private List<Change> computeBar(int value, int qix, int baz){
+	private List<Change> computeBarGivenQixAndBaz(int value, int qix, int baz){
 		List<Change> result = new ArrayList<Change>();
 		if(Coins.bar.value<=value){
 			int index = 1;
@@ -56,15 +56,15 @@ public class Echoppe extends HttpServlet {
 		return result;
 	}
 	
-	private List<Change> computeQix(int newValue, int baz){
+	private List<Change> computeQixGivenBaz(int value, int baz){
 		List<Change> result = new ArrayList<Change>();
-		result.addAll(computeBar(newValue, 0,baz));
-		if(Coins.qix.value<=newValue){
+		result.addAll(computeBarGivenQixAndBaz(value, 0,baz));
+		if(Coins.qix.value<=value){
 			
 			int indexQix = 1;
-			while (indexQix*Coins.qix.value<=newValue) {
-				result.add(new Change(newValue-indexQix*Coins.qix.value,0,indexQix,baz));
-				result.addAll(computeBar(newValue-indexQix*Coins.qix.value, indexQix,baz));
+			while (indexQix*Coins.qix.value<=value) {
+				result.add(new Change(value-indexQix*Coins.qix.value,0,indexQix,baz));
+				result.addAll(computeBarGivenQixAndBaz(value-indexQix*Coins.qix.value, indexQix,baz));
 				indexQix++;
 			}
 		}
