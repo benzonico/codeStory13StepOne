@@ -38,4 +38,14 @@ public class StepOneServletTest {
 		response = servlet.handleQuestion("156 164");
 		assertThat(response).isEqualTo("320");
 	}
+	
+	@Test
+	public void multiplyQuestionShouldReturnAnswer() throws Exception {
+		String response = servlet.handleQuestion("1*1");
+		assertThat(response).isEqualTo("1");
+		response = servlet.handleQuestion("1*2");
+		assertThat(response).isEqualTo("2");
+		response = servlet.handleQuestion("4*5");
+		assertThat(response).isEqualTo("20");
+	}
 }
