@@ -17,6 +17,7 @@ public class StepOneServlet extends HttpServlet {
 	private static final long serialVersionUID = -6871516696997178809L;
 
 	public static final String EMAIL_QUESTION = "Quelle est ton adresse email";
+	public static final String ADDITION_QUESTION = "(\\d+) (\\d+)";
 	
 	public static final String EMAIL_NPERU = "nicolas.peru@gmail.com";
 	public static final String OUI = "OUI";
@@ -67,8 +68,12 @@ public class StepOneServlet extends HttpServlet {
 		String result = null;
 		if(question!=null){
 			Matcher emailMatcher = Pattern.compile(EMAIL_QUESTION).matcher(question);
+			Matcher additionMatcher = Pattern.compile(ADDITION_QUESTION).matcher(question);
 			if(emailMatcher.matches()){
 				result = EMAIL_NPERU;
+			}else if(additionMatcher.matches()){
+				result = String.valueOf(Integer.parseInt(additionMatcher.group(1))
+	                    + Integer.parseInt(additionMatcher.group(2)));
 			}else{
 				result = BinaryQuestion.Answer(question);
 			}
