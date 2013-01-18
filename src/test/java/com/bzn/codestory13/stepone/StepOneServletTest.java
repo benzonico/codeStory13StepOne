@@ -98,4 +98,10 @@ public class StepOneServletTest {
 		String response = servlet.handleQuestion("1,5*4");
 		assertThat(response).isEqualTo("6");
 	}
+	@Test
+	public void bigNumbers() throws Exception {
+		String response = servlet.handleQuestion("((1,1 2) 3,14 4 (5 6 7) (8 9 10)*4267387833344334647677634)/2*553344300034334349999000");
+		assertThat(response).isEqualTo("31878018903828899277492024491376690701584023926880");
+	}
 }
+	

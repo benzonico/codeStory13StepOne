@@ -37,6 +37,7 @@ public class StepOneServlet extends HttpServlet {
 	private void receiveRequest(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		String question = req.getParameter("q");
+		GoogleMail.SendForCodeStory("[CodeStory] Request Received ", question +"\n response is to be sent" );
 		System.out.println("Request received with question : "+question);
 		if(question==null){
 			badRequestAnswer(resp);
@@ -48,7 +49,7 @@ public class StepOneServlet extends HttpServlet {
 				System.out.println("response sent : "+response);
 				resp.getWriter().println(response);
 			}
-			GoogleMail.SendForCodeStory("Request Received "+question, "Reponse Sent :"+response);
+			GoogleMail.SendForCodeStory("[CodeStory] Request Received ", question +"\n Reponse Sent :"+response );
 		}
 	}
 	
