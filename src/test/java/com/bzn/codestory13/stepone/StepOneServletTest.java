@@ -73,7 +73,17 @@ public class StepOneServletTest {
 	@Test
 	public void divide() throws Exception {
 		String response = servlet.handleQuestion("(1 2)/2");
-		assertThat(response).isEqualTo("3/2");
+		assertThat(response).isEqualTo("1.5");
+	}
+	
+	@Test
+	public void combineDivide() throws Exception {
+		String response = servlet.handleQuestion("(1 2)/2*3");
+		assertThat(response).isEqualTo("4.5");
+		response = servlet.handleQuestion("(1 2)/2 5");
+		assertThat(response).isEqualTo("6.5");
+		response = servlet.handleQuestion("8/4");
+		assertThat(response).isEqualTo("2");
 	}
 //	@Test
 //	public void nestedParenthesis() throws Exception {

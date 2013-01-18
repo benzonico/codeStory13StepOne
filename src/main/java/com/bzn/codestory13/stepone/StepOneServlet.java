@@ -13,6 +13,8 @@ import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import com.bzn.codestory13.stepone.numbers.ArithmeticParser;
+
 public class StepOneServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -6871516696997178809L;
@@ -20,22 +22,11 @@ public class StepOneServlet extends HttpServlet {
 	public static final String EMAIL_QUESTION = "Quelle est ton adresse email";
 	public static final String BINARY_QUESTION= ".*\\(OUI/NON\\)";
 	
-	public static final String TERM="(.*)";
-	public static final String PLUS=" ";
-	public static final String MULTIPLY="\\*";
-	public static final String BY="/";
-	public static final String NUMBER="(\\d+)";
-	
-	public static final String ADD = TERM+PLUS+TERM;
-	public static final String TIMES = TERM+MULTIPLY+TERM;
-	public static final String DIVIDE = TERM+BY+TERM;
-	
-	public static final String PARENTHESIS ="(.*)\\((.*)\\)(.*)";
-	
 	public static final String EMAIL_NPERU = "nicolas.peru@gmail.com";
 	public static final String OUI = "OUI";
 	public static final String NON = "NON";
 
+	private ArithmeticParser parser = new ArithmeticParser();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -83,33 +74,12 @@ public class StepOneServlet extends HttpServlet {
 		if(question!=null){
 			Matcher emailMatcher = Pattern.compile(EMAIL_QUESTION).matcher(question);
 			Matcher binaryMatcher = Pattern.compile(BINARY_QUESTION).matcher(question);
-			Matcher additionMatcher = Pattern.compile(ADD).matcher(question);
-			Matcher multiplyMatcher = Pattern.compile(TIMES).matcher(question);
-			Matcher parenthesis = Pattern.compile(PARENTHESIS).matcher(question);
-			Matcher number = Pattern.compile(NUMBER).matcher(question);
-			Matcher divideMatcher = Pattern.compile(DIVIDE).matcher(question);
 			if(emailMatcher.matches()){
 				result = EMAIL_NPERU;
 			}else if(binaryMatcher.matches()){
 				result = BinaryQuestion.Answer(question);
-			}else if(number.matches()){
-				result = number.group(1);
-			}else if(parenthesis.matches()){
-				result = handleQuestion(handleQuestion(parenthesis.group(1)+handleQuestion(parenthesis.group(2)))+parenthesis.group(3));
-			}else if(additionMatcher.matches()){
-				result = String.valueOf(Integer.parseInt(handleQuestion(additionMatcher.group(1)))
-						+ Integer.parseInt(handleQuestion(additionMatcher.group(2))));
-			}else if(multiplyMatcher.matches()){
-				result = String.valueOf(Integer.parseInt(handleQuestion(multiplyMatcher.group(1)))
-	                    * Integer.parseInt(handleQuestion(multiplyMatcher.group(2))));
-			} else if(divideMatcher.matches()){
-				int num = Integer.parseInt(handleQuestion(divideMatcher.group(1)));
-				int denom = Integer.parseInt(handleQuestion(divideMatcher.group(2)));
-				if(num%denom==0){
-					result = String.valueOf(num/denom);
-				}else{
-					result = num+"/"+denom;
-				}
+			}else{
+				result = parser.calculate(question);
 			}
 			
 		}
