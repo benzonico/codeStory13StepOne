@@ -23,10 +23,12 @@ public class StepOneServlet extends HttpServlet {
 	public static final String TERM="(.*)";
 	public static final String PLUS=" ";
 	public static final String MULTIPLY="\\*";
+	public static final String BY="/";
 	public static final String NUMBER="(\\d+)";
 	
 	public static final String ADD = TERM+PLUS+TERM;
 	public static final String TIMES = TERM+MULTIPLY+TERM;
+	public static final String DIVIDE = TERM+BY+TERM;
 	
 	public static final String PARENTHESIS ="(.*)\\((.*)\\)(.*)";
 	
@@ -85,6 +87,7 @@ public class StepOneServlet extends HttpServlet {
 			Matcher multiplyMatcher = Pattern.compile(TIMES).matcher(question);
 			Matcher parenthesis = Pattern.compile(PARENTHESIS).matcher(question);
 			Matcher number = Pattern.compile(NUMBER).matcher(question);
+			Matcher divideMatcher = Pattern.compile(DIVIDE).matcher(question);
 			if(emailMatcher.matches()){
 				result = EMAIL_NPERU;
 			}else if(binaryMatcher.matches()){
@@ -99,7 +102,10 @@ public class StepOneServlet extends HttpServlet {
 			}else if(multiplyMatcher.matches()){
 				result = String.valueOf(Integer.parseInt(handleQuestion(multiplyMatcher.group(1)))
 	                    * Integer.parseInt(handleQuestion(multiplyMatcher.group(2))));
-			} 
+			} else if(divideMatcher.matches()){
+				result = String.valueOf(Integer.parseInt(handleQuestion(divideMatcher.group(1)))
+	                    / Integer.parseInt(handleQuestion(divideMatcher.group(2))));
+			}
 			
 		}
 		return result;

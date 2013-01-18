@@ -70,7 +70,11 @@ public class StepOneServletTest {
 		response = servlet.handleQuestion("(3 5)*(1 2) 5");
 		assertThat(response).isEqualTo("29");
 	}
-	
+	@Test
+	public void divide() throws Exception {
+		String response = servlet.handleQuestion("(1 2)/2");
+		assertThat(response).isEqualTo("1");
+	}
 //	@Test
 //	public void nestedParenthesis() throws Exception {
 //		String response = servlet.handleQuestion("3*((1 2) (2*2))");
