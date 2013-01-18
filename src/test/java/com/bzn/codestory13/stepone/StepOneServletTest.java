@@ -90,10 +90,12 @@ public class StepOneServletTest {
 	public void nestedParenthesis(){
 		String response = servlet.handleQuestion("((1 2) 3 4 (5 6 7) (8 9 10)*3)/2*5");
 		assertThat(response).isEqualTo("272,5");
+		response = servlet.handleQuestion("3*((1 2) (2*2))");
+		assertThat(response).isEqualTo("21");
 	}
-//	@Test
-//	public void nestedParenthesis() throws Exception {
-//		String response = servlet.handleQuestion("3*((1 2) (2*2))");
-//		assertThat(response).isEqualTo("21");
-//	}
+	@Test 
+	public void decimalShouldBeHandled() throws Exception {
+		String response = servlet.handleQuestion("1,5*4");
+		assertThat(response).isEqualTo("6");
+	}
 }

@@ -79,7 +79,7 @@ public class StepOneServlet extends HttpServlet {
 			}else if(binaryMatcher.matches()){
 				result = BinaryQuestion.Answer(question);
 			}else{
-				result = parser.calculate(question).replace('.', ',');
+				result = parser.calculate(question.replace(',', '.')).replace('.', ',');
 			}
 			
 		}

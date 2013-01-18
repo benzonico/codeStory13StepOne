@@ -11,7 +11,7 @@ public class ArithmeticParser {
 	public static final String PLUS=" ";
 	public static final String MULTIPLY="\\*";
 	public static final String BY="/";
-	public static final String NUMBER="(\\d+)";
+	public static final String NUMBER="(\\d+(\\.\\d+)?)";
 	
 	public static final String ADD = TERM+PLUS+TERM;
 	public static final String TIMES = TERM+MULTIPLY+TERM;
@@ -100,12 +100,6 @@ public class ArithmeticParser {
 		}
 		@Override
 		public String handleMatcher(Matcher matcher) {
-			for (int i = 1; i <= matcher.groupCount(); i++) {
-				System.out.println(matcher.group(i)+" -- ");
-			}
-			String exp = matcher.group(0);
-			String grp1 = exp.substring(0,exp.indexOf('('));
-			
 			return parser.calculate(matcher.group(1)+parser.calculate(matcher.group(2))+matcher.group(3));
 		}
 	}
