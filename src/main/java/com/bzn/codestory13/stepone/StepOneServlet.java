@@ -103,8 +103,13 @@ public class StepOneServlet extends HttpServlet {
 				result = String.valueOf(Integer.parseInt(handleQuestion(multiplyMatcher.group(1)))
 	                    * Integer.parseInt(handleQuestion(multiplyMatcher.group(2))));
 			} else if(divideMatcher.matches()){
-				result = String.valueOf(Integer.parseInt(handleQuestion(divideMatcher.group(1)))
-	                    / Integer.parseInt(handleQuestion(divideMatcher.group(2))));
+				int num = Integer.parseInt(handleQuestion(divideMatcher.group(1)));
+				int denom = Integer.parseInt(handleQuestion(divideMatcher.group(2)));
+				if(num%denom==0){
+					result = String.valueOf(num/denom);
+				}else{
+					result = num+"/"+denom;
+				}
 			}
 			
 		}
