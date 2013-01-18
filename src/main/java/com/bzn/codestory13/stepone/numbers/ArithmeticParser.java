@@ -17,7 +17,7 @@ public class ArithmeticParser {
 	public static final String TIMES = TERM+MULTIPLY+TERM;
 	public static final String DIVIDE = TERM+BY+TERM;
 	
-	public static final String PARENTHESIS ="(.*)\\((.*)\\)(.*)";
+	public static final String PARENTHESIS ="(.*)\\(([^()]*)\\)(.*)";
 	
 	
 	public String calculate(String expression){
@@ -43,6 +43,7 @@ public class ArithmeticParser {
 			if(matcher.matches()){
 				result = handleMatcher(matcher);
 			}
+			System.out.println("expression: "+expression +" -- "+result);
 			return result;
 		}
 		
@@ -99,7 +100,13 @@ public class ArithmeticParser {
 		}
 		@Override
 		public String handleMatcher(Matcher matcher) {
-			return parser.calculate(parser.calculate(matcher.group(1)+parser.calculate(matcher.group(2)))+matcher.group(3));
+			for (int i = 1; i <= matcher.groupCount(); i++) {
+				System.out.println(matcher.group(i)+" -- ");
+			}
+			String exp = matcher.group(0);
+			String grp1 = exp.substring(0,exp.indexOf('('));
+			
+			return parser.calculate(matcher.group(1)+parser.calculate(matcher.group(2))+matcher.group(3));
 		}
 	}
 	private class AddMatcher extends OperatorMatcher{

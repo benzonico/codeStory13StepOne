@@ -85,6 +85,12 @@ public class StepOneServletTest {
 		response = servlet.handleQuestion("8/4");
 		assertThat(response).isEqualTo("2");
 	}
+	
+	@Test
+	public void nestedParenthesis(){
+		String response = servlet.handleQuestion("((1 2) 3 4 (5 6 7) (8 9 10)*3)/2*5");
+		assertThat(response).isEqualTo("272,5");
+	}
 //	@Test
 //	public void nestedParenthesis() throws Exception {
 //		String response = servlet.handleQuestion("3*((1 2) (2*2))");
