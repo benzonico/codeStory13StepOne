@@ -11,7 +11,7 @@ public class StepOneServletTest {
 	@Test
 	public void nullQuestionShouldReturnNullResponse() {
 		String response = servlet.handleQuestion(null);
-		assertThat(response).isNull();
+		assertThat(response).isEmpty();
 	}
 	
 	@Test
@@ -48,4 +48,32 @@ public class StepOneServletTest {
 		response = servlet.handleQuestion("4*5");
 		assertThat(response).isEqualTo("20");
 	}
+	
+	@Test
+	public void parenthesisMatching() throws Exception {
+		String response = servlet.handleQuestion("(1 2)*2");
+		assertThat(response).isEqualTo("6");
+		response = servlet.handleQuestion("2*(1 3)");
+		assertThat(response).isEqualTo("8");
+	}
+	@Test
+	public void precedenceShouldWork() throws Exception {
+		String response = servlet.handleQuestion("3 5*2");
+		assertThat(response).isEqualTo("13");
+		response = servlet.handleQuestion("(3 5)*2");
+		assertThat(response).isEqualTo("16");
+	}
+	@Test
+	public void multipleParenthesis() throws Exception {
+		String response = servlet.handleQuestion("(3 5)*(1 2)");
+		assertThat(response).isEqualTo("24");
+		response = servlet.handleQuestion("(3 5)*(1 2) 5");
+		assertThat(response).isEqualTo("29");
+	}
+	
+//	@Test
+//	public void nestedParenthesis() throws Exception {
+//		String response = servlet.handleQuestion("3*((1 2) (2*2))");
+//		assertThat(response).isEqualTo("21");
+//	}
 }
