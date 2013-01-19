@@ -8,6 +8,10 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.bzn.codestory13.stepone.scalaskel.Change;
+import com.bzn.codestory13.stepone.scalaskel.Coins;
+import com.bzn.codestory13.stepone.scalaskel.Echoppe;
+
 public class EchoppeTest {
 
 	private Echoppe echoppe = new Echoppe();

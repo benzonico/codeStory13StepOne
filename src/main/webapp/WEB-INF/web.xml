@@ -18,11 +18,21 @@
   
    <servlet>
     <servlet-name>scalaskel</servlet-name>
-    <servlet-class>com.bzn.codestory13.stepone.Echoppe</servlet-class>
+    <servlet-class>com.bzn.codestory13.stepone.scalaskel.Echoppe</servlet-class>
   </servlet>
 
   <servlet-mapping>
     <servlet-name>scalaskel</servlet-name>
     <url-pattern>/scalaskel/change/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>jajascript</servlet-name>
+    <servlet-class>com.bzn.codestory13.stepone.jajascript.Optimize</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>jajascript</servlet-name>
+    <url-pattern>/jajascript/optimize</url-pattern>
   </servlet-mapping>
 </web-app>

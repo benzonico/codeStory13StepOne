@@ -1,4 +1,4 @@
-package com.bzn.codestory13.stepone;
+package com.bzn.codestory13.stepone.scalaskel;
 
 public enum Coins {
 	foo(1, new Change(1)),

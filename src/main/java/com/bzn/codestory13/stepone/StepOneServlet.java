@@ -51,10 +51,12 @@ public class StepOneServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("encoding "+req.getCharacterEncoding());
-		System.out.println("Receiving Markdown file : ");
+		System.out.println("Receiving POST on / : ");
 		String enonce = IOUtils.toString(req.getInputStream(),Charsets.UTF_8);
 		System.out.println(enonce);
-		GoogleMail.SendForCodeStory("Enonce Received ", enonce);
+		if(req.getPathInfo().contains("enonce")){
+			GoogleMail.SendForCodeStory("Enonce Received ", enonce);
+		}
 		resp.setStatus(HttpServletResponse.SC_CREATED);
 	}
 	

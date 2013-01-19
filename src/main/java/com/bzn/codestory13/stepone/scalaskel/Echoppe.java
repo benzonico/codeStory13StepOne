@@ -1,4 +1,4 @@
-package com.bzn.codestory13.stepone;
+package com.bzn.codestory13.stepone.scalaskel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bzn.codestory13.stepone.GoogleMail;
 import com.google.gson.Gson;
 
 public class Echoppe extends HttpServlet {

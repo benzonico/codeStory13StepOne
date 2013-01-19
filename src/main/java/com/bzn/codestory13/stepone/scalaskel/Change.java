@@ -1,4 +1,4 @@
-package com.bzn.codestory13.stepone;
+package com.bzn.codestory13.stepone.scalaskel;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
