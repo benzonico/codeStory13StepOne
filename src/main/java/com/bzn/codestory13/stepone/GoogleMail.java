@@ -1,15 +1,17 @@
 package com.bzn.codestory13.stepone;
 
-import com.sun.mail.smtp.SMTPTransport;
 import java.security.Security;
 import java.util.Date;
 import java.util.Properties;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import com.sun.mail.smtp.SMTPTransport;
 
 /**
  *
@@ -21,7 +23,7 @@ public class GoogleMail {
 
     public static void SendForCodeStory(String title,String message){
     	try {
-			GoogleMail.Send("bzncodestory","codestoryRocks",StepOneServlet.EMAIL_NPERU,"[CodeStory] "+title,message);
+			GoogleMail.Send("bzncodestory","codestoryRocks","nicolas.peru@gmail.com","[CodeStory] "+title,message);
 		} catch (AddressException e) {
 			e.printStackTrace();
 		} catch (MessagingException e) {

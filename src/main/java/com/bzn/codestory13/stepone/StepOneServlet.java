@@ -1,8 +1,6 @@
 	package com.bzn.codestory13.stepone;
 
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,14 +16,6 @@ import com.bzn.codestory13.stepone.numbers.ArithmeticParser;
 public class StepOneServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -6871516696997178809L;
-
-	public static final String EMAIL_QUESTION = "Quelle est ton adresse email";
-	
-	public static final String EMAIL_NPERU = "nicolas.peru@gmail.com";
-	public static final String OUI = "OUI";
-	public static final String NON = "NON";
-
-	private ArithmeticParser parser = new ArithmeticParser();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -72,16 +62,10 @@ public class StepOneServlet extends HttpServlet {
 		String result = "";
 		System.out.println(question);
 		if(question!=null){
-			Matcher emailMatcher = Pattern.compile(EMAIL_QUESTION).matcher(question);
-			if(emailMatcher.matches()){
-				result = EMAIL_NPERU;
-			}else{
-				result = TextQuestion.Answer(question);
-				if(StringUtils.isBlank(result)){
-					result = parser.calculate(question.replace(',', '.')).replace('.', ',');
-				}
+			result = TextQuestion.Answer(question);
+			if(StringUtils.isBlank(result)){
+				result = new ArithmeticParser().calculate(question.replace(',', '.')).replace('.', ',');
 			}
-			
 		}
 		return result;
 	}
