@@ -17,7 +17,8 @@ import com.google.gson.reflect.TypeToken;
 public class Optimize extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
-
+	private static Gson gson = new Gson();
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -29,11 +30,13 @@ public class Optimize extends HttpServlet{
 	}
 	
 	public String optimizeFlights(String jsonFlights){
-		Gson gson = new Gson();
-		List<Flight> flights = gson.fromJson(jsonFlights, new TypeToken<List<Flight>>(){}.getType());
-		FlightPlan plan = new FlightPlan();
-		plan.calculate(flights);
+		List<Flight> flights = convertJsonToListOfFlight(jsonFlights);
+		FlightPlan plan = FlightPlan.calculate(flights);
 		return gson.toJson(plan);
+	}
+	
+	public static List<Flight> convertJsonToListOfFlight(String jsonFlights){
+		return gson.fromJson(jsonFlights, new TypeToken<List<Flight>>(){}.getType());
 	}
 	
 }

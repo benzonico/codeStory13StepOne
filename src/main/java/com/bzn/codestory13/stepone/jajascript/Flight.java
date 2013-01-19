@@ -9,6 +9,17 @@ public class Flight {
 	public long DEPART;
 	public long DUREE;
 	public long PRIX;
+	
+	
+	public Flight(String vol, long depart, long duree, long prix) {
+		super();
+		VOL = vol;
+		DEPART = depart;
+		DUREE = duree;
+		PRIX = prix;
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
