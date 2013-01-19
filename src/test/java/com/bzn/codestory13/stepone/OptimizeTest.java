@@ -1,8 +1,10 @@
-package com.bzn.codestory13.stepone.jajascript;
+package com.bzn.codestory13.stepone;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
 import org.junit.Test;
+
+import com.bzn.codestory13.stepone.jajascript.Optimize;
 
 public class OptimizeTest {
 
