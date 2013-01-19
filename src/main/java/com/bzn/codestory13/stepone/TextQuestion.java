@@ -10,7 +10,8 @@ public enum TextQuestion {
 	POST_MD_QUESTION("Es tu pret a recevoir une enonce au format markdown par http post(OUI/NON)","OUI"),
 	ALWAYS_YES_QUESTION("Est ce que tu reponds toujours oui(OUI/NON)","NON"),
 	PREMIER_ENONCE("As tu bien recu le premier enonce(OUI/NON)","OUI"),
-	BONNE_NUIT("As tu passe une bonne nuit malgre les bugs de l etape precedente(PAS_TOP/BOF/QUELS_BUGS)","QUELS_BUGS");
+	BONNE_NUIT("As tu passe une bonne nuit malgre les bugs de l etape precedente(PAS_TOP/BOF/QUELS_BUGS)","QUELS_BUGS"),
+	DEUXIEME_ENONCE("As+tu+bien+recu+le+second+enonce(OUI/NON)","OUI");
 
 	private String question;
 	private String answer;
