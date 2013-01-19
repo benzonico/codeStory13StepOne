@@ -33,6 +33,6 @@
 
   <servlet-mapping>
     <servlet-name>jajascript</servlet-name>
-    <url-pattern>/jajascript/optimize</url-pattern>
+    <url-pattern>/jajascript/optimize/*</url-pattern>
   </servlet-mapping>
 </web-app>
