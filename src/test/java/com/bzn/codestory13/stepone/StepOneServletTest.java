@@ -22,8 +22,8 @@ public class StepOneServletTest {
 	
 	@Test
 	public void BinaryQuestionShouldReturnTheirAnswer() throws Exception {
-		for (int i = 0; i < BinaryQuestion.values().length; i++) {
-			BinaryQuestion bquestion = BinaryQuestion.values()[i];
+		for (int i = 0; i < TextQuestion.values().length; i++) {
+			TextQuestion bquestion = TextQuestion.values()[i];
 			String response = servlet.handleQuestion(bquestion.getQuestion());
 			assertThat(response).isEqualTo(bquestion.getAnswer());
 		}

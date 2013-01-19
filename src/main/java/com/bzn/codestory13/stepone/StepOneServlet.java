@@ -20,7 +20,6 @@ public class StepOneServlet extends HttpServlet {
 	private static final long serialVersionUID = -6871516696997178809L;
 
 	public static final String EMAIL_QUESTION = "Quelle est ton adresse email";
-	public static final String BINARY_QUESTION= ".*\\(OUI/NON\\)";
 	
 	public static final String EMAIL_NPERU = "nicolas.peru@gmail.com";
 	public static final String OUI = "OUI";
@@ -74,13 +73,13 @@ public class StepOneServlet extends HttpServlet {
 		System.out.println(question);
 		if(question!=null){
 			Matcher emailMatcher = Pattern.compile(EMAIL_QUESTION).matcher(question);
-			Matcher binaryMatcher = Pattern.compile(BINARY_QUESTION).matcher(question);
 			if(emailMatcher.matches()){
 				result = EMAIL_NPERU;
-			}else if(binaryMatcher.matches()){
-				result = BinaryQuestion.Answer(question);
 			}else{
-				result = parser.calculate(question.replace(',', '.')).replace('.', ',');
+				result = TextQuestion.Answer(question);
+				if(StringUtils.isBlank(result)){
+					result = parser.calculate(question.replace(',', '.')).replace('.', ',');
+				}
 			}
 			
 		}
