@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 
+import com.bzn.codestory13.stepone.GoogleMail;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -23,8 +24,12 @@ public class Optimize extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String jsonFlights = IOUtils.toString(req.getInputStream(),Charsets.UTF_8);
+		System.out.println("Received Json request");
+		System.out.println(jsonFlights);
+		GoogleMail.SendForCodeStory("Jajascript request", jsonFlights);
 		String result = optimizeFlights(jsonFlights);
-		resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		resp.setStatus(HttpServletResponse.SC_CREATED);
+		GoogleMail.SendForCodeStory("Jajascript request", result);
 		resp.getWriter().println(result);
 		
 	}
