@@ -57,13 +57,14 @@ public class FlightPlanTest {
 //	@Test
 	public void optimizeShouldWorkWithLotOfFlights(){
 		List<Flight> flights = new ArrayList<Flight>();
-		for (int i = 0; i < 1000; i++) {
+		int flightsNumber = 15;
+		for (int i = 0; i < flightsNumber; i++) {
 			flights.add(new Flight("volA"+i, i, 1,1));
 			flights.add(new Flight("volB"+i, i, 1,1));
 		}
 		flightPlan = FlightPlan.calculate(flights);
-		assertThat(flightPlan.gain).isEqualTo(1000);
-		assertThat(flightPlan.path).hasSize(1000);
+		assertThat(flightPlan.gain).isEqualTo(flightsNumber);
+		assertThat(flightPlan.path).hasSize(flightsNumber);
 	}
 
 }

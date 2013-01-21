@@ -1,6 +1,7 @@
 package com.bzn.codestory13.stepone.jajascript;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class FlightPlan {
@@ -16,6 +17,12 @@ public class FlightPlan {
 		this.gain = gain;
 		this.path = path;
 	}
+	public static FlightPlan calculateCombi(List<Flight> flights) {
+		List<List<Flight>> combinations = new LinkedList<List<Flight>>();
+		return null;
+	}
+	
+	
 	public static FlightPlan calculate(List<Flight> flights) {
 		List<FlightPlan> flightPlans = calculate(flights,0,new FlightPlan());
 		FlightPlan maxGain = new FlightPlan(-1,null);
@@ -29,7 +36,7 @@ public class FlightPlan {
 	}
 	
 	private static List<FlightPlan> calculate(final List<Flight> flights,final long timeAvalaible,final FlightPlan flightPlan){
-		List<FlightPlan> result = new ArrayList<FlightPlan>(); 	
+		List<FlightPlan> result = new LinkedList<FlightPlan>(); 	
 		if(flights.isEmpty()){
 			result.add(flightPlan);
 			return result;
@@ -39,7 +46,7 @@ public class FlightPlan {
 		for(Flight flight : flights){
 			long newTimeAvalaible=flight.DEPART+flight.DUREE;
 			List<Flight> possibleNextFlights = possibleNextFlights(flights,newTimeAvalaible);
-			List<String> currentPath = new ArrayList<String>(flightPlan.path);
+			List<String> currentPath = new LinkedList<String>(flightPlan.path);
 			currentPath.add(flight.VOL);
 			FlightPlan fp = new FlightPlan(currentGain+flight.PRIX,currentPath);
 			result.addAll(calculate(possibleNextFlights, newTimeAvalaible, fp ));
@@ -48,7 +55,7 @@ public class FlightPlan {
 	}
 	
 	private static List<Flight> possibleNextFlights(List<Flight> flights, long newTimeAvalaible) {
-		List<Flight> result = new ArrayList<Flight>();
+		List<Flight> result = new ArrayList<Flight>(flights.size());
 		for(Flight flight :flights){
 			if(flight.DEPART>=newTimeAvalaible){
 				result.add(flight);
