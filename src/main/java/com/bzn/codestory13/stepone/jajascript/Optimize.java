@@ -1,7 +1,9 @@
 package com.bzn.codestory13.stepone.jajascript;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,17 +22,26 @@ public class Optimize extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private static Gson gson = new Gson();
 	
+	private static Map<String, String> cache = new HashMap<String, String>();
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		long time = System.nanoTime();
 		String jsonFlights = IOUtils.toString(req.getInputStream(),Charsets.UTF_8);
 		System.out.println("Received Json request");
 		System.out.println(jsonFlights);
-		GoogleMail.SendForCodeStory("Jajascript request", jsonFlights);
-		String result = optimizeFlights(jsonFlights);
-		resp.setStatus(HttpServletResponse.SC_CREATED);
-		GoogleMail.SendForCodeStory("Jajascript request", result);
+		String result = "";
+		if(cache.containsKey(jsonFlights)){
+			result = cache.get(jsonFlights); 
+		}else{
+			GoogleMail.SendForCodeStory("Jajascript request", jsonFlights);
+			result = optimizeFlights(jsonFlights);
+			cache.put(jsonFlights, jsonFlights);
+			resp.setStatus(HttpServletResponse.SC_CREATED);
+		}
 		resp.getWriter().println(result);
+		GoogleMail.SendForCodeStory("Jajascript request ",(System.nanoTime()-time)+"ms\n"+ result);
 		
 	}
 	
