@@ -54,9 +54,7 @@ public class StepOneServlet extends HttpServlet {
 		System.out.println("Receiving POST on / : ");
 		String enonce = IOUtils.toString(req.getInputStream(),Charsets.UTF_8);
 		System.out.println(enonce);
-		if(req.getPathInfo().contains("enonce")){
-			GoogleMail.SendForCodeStory("Enonce Received ", enonce);
-		}
+		GoogleMail.SendForCodeStory("Enonce Received ", enonce);
 		resp.setStatus(HttpServletResponse.SC_CREATED);
 	}
 	

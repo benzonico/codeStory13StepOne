@@ -1,7 +1,6 @@
 package com.bzn.codestory13.stepone.jajascript;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class FlightPlan {
@@ -22,16 +21,17 @@ public class FlightPlan {
 	private static FlightPlan maxGain;
 	public static FlightPlan calculate(List<Flight> flights) {
 		maxGain = new FlightPlan(-1,null);
-		List<FlightPlan> flightPlans = calculate(flights,0,new FlightPlan());
+		calculate(flights,0,new FlightPlan());
 		return maxGain;
 		
 	}
 	
-	private static List<FlightPlan> calculate(final List<Flight> flights,final long timeAvalaible,final FlightPlan flightPlan){
-		List<FlightPlan> result = new LinkedList<FlightPlan>(); 	
+	private static FlightPlan calculate(final List<Flight> flights,final long timeAvalaible,final FlightPlan flightPlan){
+		FlightPlan result = null;
 		if(flights.isEmpty()){
 			if(flightPlan.gain>maxGain.gain){
 				maxGain = flightPlan;
+				result = maxGain;
 			}
 			return result;
 		} 
@@ -40,10 +40,10 @@ public class FlightPlan {
 		for(Flight flight : flights){
 			long newTimeAvalaible=flight.DEPART+flight.DUREE;
 			List<Flight> possibleNextFlights = possibleNextFlights(flights,newTimeAvalaible);
-			List<String> currentPath = new LinkedList<String>(flightPlan.path);
+			List<String> currentPath = new ArrayList<String>(flightPlan.path);
 			currentPath.add(flight.VOL);
 			FlightPlan fp = new FlightPlan(currentGain+flight.PRIX,currentPath);
-			result.addAll(calculate(possibleNextFlights, newTimeAvalaible, fp ));
+			result = calculate(possibleNextFlights, newTimeAvalaible, fp );
 		}
 		return result;
 	}
