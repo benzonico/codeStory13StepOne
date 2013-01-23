@@ -37,7 +37,17 @@ public class Optimize extends HttpServlet{
 	public String optimizeFlights(String jsonFlights){
 		List<Flight> flights = convertJsonToListOfFlight(jsonFlights);
 		FlightPlan plan = FlightPlan.calculate(flights);
-		return gson.toJson(plan);
+		String result ="{\"gain\":"+plan.gain;
+		result +=",\"path\":[";
+		int index=0;
+		while(index<plan.path.length && plan.path[index]!=null){
+			if(index!=0){
+				result+=",";
+			}
+			result+=plan.path[index];
+			index++;
+		}
+		return result;
 	}
 	
 	public static List<Flight> convertJsonToListOfFlight(String jsonFlights){

@@ -6,12 +6,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class Flight {
 
 	public String VOL;
-	public long DEPART;
-	public long DUREE;
-	public long PRIX;
+	public int DEPART;
+	public int DUREE;
+	public int PRIX;
 	
 	
-	public Flight(String vol, long depart, long duree, long prix) {
+	public Flight(String vol, int depart, int duree, int prix) {
 		super();
 		VOL = vol;
 		DEPART = depart;

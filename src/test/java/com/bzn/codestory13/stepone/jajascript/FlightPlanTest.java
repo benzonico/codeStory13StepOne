@@ -28,7 +28,7 @@ public class FlightPlanTest {
 		flights.add(new Flight("vol1", 0, 5, 5));
 		flights.add(new Flight("vol2", 5, 10, 7));
 		flightPlan = FlightPlan.calculate(flights);
-		assertThat(flightPlan.gain).isEqualTo(12L);
+		assertThat(flightPlan.gain).isEqualTo(12);
 		assertThat(flightPlan.path).hasSize(2).containsSequence("vol1","vol2");
 	}
 	@Test
@@ -37,7 +37,7 @@ public class FlightPlanTest {
 		flights.add(new Flight("vol1", 0, 5, 5));
 		flights.add(new Flight("vol2", 0, 10, 7));
 		flightPlan = FlightPlan.calculate(flights);
-		assertThat(flightPlan.gain).isEqualTo(7L);
+		assertThat(flightPlan.gain).isEqualTo(7);
 		assertThat(flightPlan.path).hasSize(1).containsSequence("vol2");
 	}
 	
@@ -50,7 +50,7 @@ public class FlightPlanTest {
 				"{ \"VOL\": \"YAGNI17\", \"DEPART\": 5, \"DUREE\": 9, \"PRIX\": 7 }"+
 				"]";
 		flightPlan = FlightPlan.calculate(Optimize.convertJsonToListOfFlight(input));
-		assertThat(flightPlan.gain).isEqualTo(18L);
+		assertThat(flightPlan.gain).isEqualTo(18);
 		assertThat(flightPlan.path).hasSize(2).containsSequence("MONAD42","LEGACY01");
 	}
 	
