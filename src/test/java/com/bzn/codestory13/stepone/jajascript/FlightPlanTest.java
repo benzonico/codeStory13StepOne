@@ -54,10 +54,13 @@ public class FlightPlanTest {
 		assertThat(flightPlan.path).hasSize(2).containsSequence("MONAD42","LEGACY01");
 	}
 	
+	
+	
+	
 //	@Test
 	public void optimizeShouldWorkWithLotOfFlights(){
 		List<Flight> flights = new ArrayList<Flight>();
-		int flightsNumber = 15;
+		int flightsNumber = 25;
 		for (int i = 0; i < flightsNumber; i++) {
 			flights.add(new Flight("volA"+i, i, 1,1));
 			flights.add(new Flight("volB"+i, i, 1,1));

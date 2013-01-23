@@ -17,20 +17,12 @@ public class FlightPlan {
 		this.gain = gain;
 		this.path = path;
 	}
-	public static FlightPlan calculateCombi(List<Flight> flights) {
-		List<List<Flight>> combinations = new LinkedList<List<Flight>>();
-		return null;
-	}
 	
 	
+	private static FlightPlan maxGain;
 	public static FlightPlan calculate(List<Flight> flights) {
+		maxGain = new FlightPlan(-1,null);
 		List<FlightPlan> flightPlans = calculate(flights,0,new FlightPlan());
-		FlightPlan maxGain = new FlightPlan(-1,null);
-		for(FlightPlan fp : flightPlans){
-			if(fp.gain>maxGain.gain){
-				maxGain = fp;
-			}
-		}
 		return maxGain;
 		
 	}
@@ -38,7 +30,9 @@ public class FlightPlan {
 	private static List<FlightPlan> calculate(final List<Flight> flights,final long timeAvalaible,final FlightPlan flightPlan){
 		List<FlightPlan> result = new LinkedList<FlightPlan>(); 	
 		if(flights.isEmpty()){
-			result.add(flightPlan);
+			if(flightPlan.gain>maxGain.gain){
+				maxGain = flightPlan;
+			}
 			return result;
 		} 
 		long currentGain = flightPlan.gain;
