@@ -43,7 +43,10 @@ public class Optimize extends HttpServlet{
 			resp.setStatus(HttpServletResponse.SC_CREATED);
 		}
 		resp.getWriter().println(result);
-		GoogleMail.SendForCodeStory("Jajascript request ",(System.nanoTime()-time)/1000000+"ms  "+cacheHit+"\n"+jsonFlights+"\n\n\n"+ result);
+		System.out.println(result);
+		time = (System.nanoTime()-time)/1000000;
+		System.out.println("found in "+time+"ms");
+		GoogleMail.SendForCodeStory("Jajascript request ",time+"ms  "+cacheHit+"\n"+jsonFlights+"\n\n\n"+ result);
 		
 	}
 	
