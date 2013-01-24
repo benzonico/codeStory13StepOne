@@ -39,18 +39,23 @@ public class FlightPlan {
 		
 		for(Flight flight : flights){
 			int newTimeAvalaible=flight.DEPART+flight.DUREE;
-			List<Flight> possibleNextFlights = possibleNextFlights(flights,newTimeAvalaible);
+			List<Flight> possibleNextFlights = possibleNextFlights(flights,newTimeAvalaible,gain+flight.PRIX);
 			path[level] = flight.VOL;
 			calculate(possibleNextFlights, newTimeAvalaible,path, gain+flight.PRIX,level+1 );
 		}
 	}
 	
-	private static List<Flight> possibleNextFlights(List<Flight> flights, long newTimeAvalaible) {
+	private static List<Flight> possibleNextFlights(List<Flight> flights, long newTimeAvalaible,int gain) {
 		List<Flight> result = new ArrayList<Flight>(flights.size());
+		int potentialGain = 0;
 		for(Flight flight :flights){
 			if(flight.DEPART>=newTimeAvalaible){
 				result.add(flight);
+				potentialGain += flight.PRIX;
 			}
+		}
+		if(potentialGain+gain<maxGain){
+			return new ArrayList<Flight>();
 		}
 		return result;
 	}
