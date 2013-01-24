@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bzn.codestory13.stepone.GoogleMail;
 import com.google.gson.Gson;
 
 public class Echoppe extends HttpServlet {
@@ -21,7 +20,7 @@ public class Echoppe extends HttpServlet {
 		int valueToChange  =Integer.parseInt(req.getPathInfo().substring(1));
 		Gson gson = new Gson();
 		String json = gson.toJson(change(valueToChange));
-		GoogleMail.SendForCodeStory("Change request Received "+valueToChange, "Reponse Sent :"+json);
+//		GoogleMail.SendForCodeStory("Change request Received "+valueToChange, "Reponse Sent :"+json);
 		resp.getWriter().println(json);
 	}
 	

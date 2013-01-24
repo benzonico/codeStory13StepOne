@@ -32,16 +32,18 @@ public class Optimize extends HttpServlet{
 		System.out.println("Received Json request");
 		System.out.println(jsonFlights);
 		String result = "";
+		String cacheHit ="no cache";
 		if(cache.containsKey(jsonFlights)){
-			result = cache.get(jsonFlights); 
+			result = cache.get(jsonFlights);
+			cacheHit = "Cache HIT !!!";
 		}else{
-			GoogleMail.SendForCodeStory("Jajascript request", jsonFlights);
+//			GoogleMail.SendForCodeStory("Jajascript request", jsonFlights);
 			result = optimizeFlights(jsonFlights);
 			cache.put(jsonFlights, jsonFlights);
 			resp.setStatus(HttpServletResponse.SC_CREATED);
 		}
 		resp.getWriter().println(result);
-		GoogleMail.SendForCodeStory("Jajascript request ",(System.nanoTime()-time)+"ms\n"+ result);
+		GoogleMail.SendForCodeStory("Jajascript request ",(System.nanoTime()-time)/1000000+"ms  "+cacheHit+"\n"+jsonFlights+"\n\n\n"+ result);
 		
 	}
 	
