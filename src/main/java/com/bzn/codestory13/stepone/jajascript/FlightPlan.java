@@ -36,8 +36,8 @@ public class FlightPlan {
 				System.arraycopy(path, 0, maxPath, 0, level);
 			}
 		} 
-		
-		for(Flight flight : flights){
+		List<Flight> startable = startablePath(flights);
+		for(Flight flight : startable){
 			int newTimeAvalaible=flight.DEPART+flight.DUREE;
 			List<Flight> possibleNextFlights = possibleNextFlights(flights,newTimeAvalaible,gain+flight.PRIX);
 			path[level] = flight.VOL;
@@ -45,6 +45,22 @@ public class FlightPlan {
 		}
 	}
 	
+	private static List<Flight> startablePath(List<Flight> flights){
+		List<Flight> result = new ArrayList<Flight>(flights.size());
+		for(Flight flight :flights){
+			boolean isStartable = true;
+			for(Flight compare :flights){
+				if(flight!=compare && flight.DEPART>(compare.DEPART+compare.DUREE)){
+					isStartable = false;
+				}
+			}
+			if(isStartable){
+				result.add(flight);
+			}
+		}
+		return result;
+		
+	}
 	private static List<Flight> possibleNextFlights(List<Flight> flights, long newTimeAvalaible,int gain) {
 		List<Flight> result = new ArrayList<Flight>(flights.size());
 		int potentialGain = 0;
