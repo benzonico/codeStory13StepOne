@@ -1,9 +1,10 @@
 package com.bzn.codestory13.stepone.jajascript;
 
+import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-public class Flight {
+public class Flight implements Comparable<Flight>{
 
 	public String VOL;
 	public int DEPART;
@@ -28,6 +29,15 @@ public class Flight {
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj);
 	}
-	
+
+	@Override
+	public int compareTo(Flight o) {
+		return new CompareToBuilder()
+					.append(DEPART, o.DEPART)
+					.append(DUREE, o.DUREE)
+					.append(o.PRIX, PRIX)
+					.append(VOL, o.VOL)
+					.toComparison();
+	}
 	
 }
