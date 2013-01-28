@@ -40,13 +40,14 @@ public class Optimize extends HttpServlet{
 	
 	public String optimizeFlights(String jsonFlights){
 		List<Flight> flights = convertJsonToListOfFlight(jsonFlights);
-		Collections.sort(flights);
 		FlightPlan plan = FlightPlan.calculate(flights);
 		return gson.toJson(plan);
 	}
 	
 	public static List<Flight> convertJsonToListOfFlight(String jsonFlights){
-		return gson.fromJson(jsonFlights, new TypeToken<List<Flight>>(){}.getType());
+		List<Flight> flights = gson.fromJson(jsonFlights, new TypeToken<List<Flight>>(){}.getType());
+		Collections.sort(flights);
+		return flights;
 	}
 	
 }
