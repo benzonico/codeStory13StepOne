@@ -12,7 +12,8 @@ public enum TextQuestion {
 	PREMIER_ENONCE("As tu bien recu le premier enonce(OUI/NON)","OUI"),
 	BONNE_NUIT("As tu passe une bonne nuit malgre les bugs de l etape precedente(PAS_TOP/BOF/QUELS_BUGS)","QUELS_BUGS"),
 	DEUXIEME_ENONCE("As tu bien recu le second enonce(OUI/NON)","OUI"),
-	NDELOOF("As tu copie le code de ndeloof(OUI/NON/JE_SUIS_NICOLAS)","NON");
+	NDELOOF("As tu copie le code de ndeloof(OUI/NON/JE_SUIS_NICOLAS)","NON"),
+	SUITE("Souhaites-tu-participer-a-la-suite-de-Code-Story(OUI/NON)","OUI");
 	private String question;
 	private String answer;
 	
