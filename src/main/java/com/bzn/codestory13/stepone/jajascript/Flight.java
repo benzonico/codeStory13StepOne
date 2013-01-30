@@ -11,6 +11,9 @@ public class Flight implements Comparable<Flight>{
 	public int DUREE;
 	public int PRIX;
 	
+	public int arrivee(){
+		return DEPART+DUREE;
+	}
 	
 	public Flight(String vol, int depart, int duree, int prix) {
 		super();
@@ -33,7 +36,7 @@ public class Flight implements Comparable<Flight>{
 	@Override
 	public int compareTo(Flight o) {
 		return new CompareToBuilder()
-					.append(DEPART, o.DEPART)
+					.append(arrivee(), o.arrivee())
 					.append(DUREE, o.DUREE)
 					.append(o.PRIX, PRIX)
 					.append(VOL, o.VOL)

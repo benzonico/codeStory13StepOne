@@ -1,87 +1,87 @@
 package com.bzn.codestory13.stepone.jajascript;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class FlightPlan {
 
 	public int gain = 0;
 	public String[] path;
+	
 	public FlightPlan(){
 		gain = 0;
 	}
 	
-	public FlightPlan(int gain2, String[] path2) {
-		this.gain= gain2;
-		this.path = path2;
+	public FlightPlan(int gain, String[] path) {
+		this.gain= gain;
+		this.path = path;
+	}
+
+	public FlightPlan(FlightPlan fp, Flight vol){
+		this.gain = fp.gain+vol.PRIX;
+		this.path = ArrayUtils.addAll(fp.path, vol.VOL);
 	}
 
 
-	private static int maxGain;
-	private static String[] maxPath;
+	private static FlightPlan max;
 	public static FlightPlan calculate(List<Flight> flights) {
-		maxPath = new String[0];
-		maxGain = 0;
-		String[] path = new String[flights.size()];
-		calculate(flights.toArray(new Flight[flights.size()]),0,path,0,0);
-		return new FlightPlan(maxGain, maxPath);
 		
-	}
-	
-	private static void calculate(final Flight[] flights,final int timeAvalaible,final String[] path, final int gain,final int level){
-		if(flights.length==0){
-			if(gain>maxGain){
-				maxGain = gain;
-				maxPath = new String[level];
-				System.arraycopy(path, 0, maxPath, 0, level);
-			}
-		} 
-		Flight[] startable = startablePath(flights);
-		for(Flight flight : startable){
-			int newTimeAvalaible=flight.DEPART+flight.DUREE;
-			Flight[] possibleNextFlights = possibleNextFlights(flights,newTimeAvalaible,gain+flight.PRIX);
-			path[level] = flight.VOL;
-			calculate(possibleNextFlights, newTimeAvalaible,path, gain+flight.PRIX,level+1 );
-		}
-	}
-	
-	private static Flight[] startablePath(Flight[] flights){
-		List<Flight> result = new ArrayList<Flight>(flights.length);
-		for(Flight flight :flights){
-			boolean isStartable = true;
-			for(Flight compare :flights){
-				if(flight!=compare && flight.DEPART>(compare.DEPART+compare.DUREE)){
-					isStartable = false;
+		max = new FlightPlan(0, new String[0]);
+		if(flights.isEmpty()) return max;
+		int maxArrivee = flights.get(flights.size()-1).arrivee();
+		FlightPlan[] bestPaths = new FlightPlan[maxArrivee+1];
+		Arrays.fill(bestPaths, new FlightPlan(0, new String[0]));
+		
+		int flightIndex = 0;
+		for (int h = 1; h < maxArrivee+1; h++) {
+			List<Flight> arriveAtH = findFlightsArrivingAtH(h, flightIndex,flights);
+			flightIndex +=arriveAtH.size();
+			Flight bestFlightH = null;
+			int gainAtH = 0;
+			for(Flight flight : arriveAtH){
+				if(flight.PRIX+bestPaths[flight.DEPART].gain>gainAtH){
+					gainAtH = flight.PRIX+bestPaths[flight.DEPART].gain;
+					bestFlightH = flight;
 				}
 			}
-			if(isStartable){
-				result.add(flight);
-			}
-		}
-		return result.toArray(new Flight[0]);
-		
-	}
-	private static Flight[] possibleNextFlights(Flight[] flights, long newTimeAvalaible,int gain) {
-		Flight[] result = null;
-		int potentialGain = 0;
-		int nbFlights = flights.length;
-		int index = 0;
-		for (int i = 0; i < nbFlights; i++) {
-			Flight flight = flights[i];
-			if(flight.DEPART>=newTimeAvalaible){
-				if(result==null){
-					result = new Flight[nbFlights-i];
-					index = i;
+			
+			bestPaths[h] = max;
+			if(bestFlightH!=null){
+				FlightPlan bestPathH = new FlightPlan(bestPaths[bestFlightH.DEPART], bestFlightH);
+				if(bestPathH.gain>max.gain){
+					max = bestPathH;
+					bestPaths[h] = bestPathH;
 				}
-				result[i-index] = flight;
-				potentialGain += flight.PRIX;
 			}
 		}
-		if((potentialGain+gain)<maxGain || result == null){
-			result = new Flight[0];
-		}
-		return result;
+		return max;
+		
 	}
 
+	private static List<Flight> findFlightsArrivingAtH(int h, int flightIndex,
+			List<Flight> flights) {
+		int toIndex = flightIndex;
+		boolean continueLoop = true;
+		while( continueLoop && toIndex<flights.size()){
+			Flight currentFlight = flights.get(toIndex);
+			if(currentFlight.arrivee()==h){
+				toIndex++;
+				continueLoop = true;
+			}else{
+				continueLoop = false;
+			}
+			
+			
+		}
+		return flights.subList(flightIndex, toIndex);
+	}
+	
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this).append(gain).append(path).toString();
+	}
 
 }
