@@ -3,13 +3,11 @@ package com.bzn.codestory13.stepone.jajascript;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 public class FlightPlan {
 
 	public int gain = 0;
 	public String[] path;
+	private FlightPlan parentFP;
 	
 	public FlightPlan(){
 		gain = 0;
@@ -22,9 +20,22 @@ public class FlightPlan {
 
 	public FlightPlan(FlightPlan fp, Flight vol){
 		this.gain = fp.gain+vol.PRIX;
-		this.path = ArrayUtils.addAll(fp.path, vol.VOL);
+		this.path = new String[]{vol.VOL};
+		this.parentFP = fp;
 	}
-
+	private FlightPlan calculatePath(){
+		String pathToConstruct = path[0];
+		FlightPlan father = parentFP;
+		while (father.parentFP!=null) {
+			pathToConstruct=father.path[0]+","+pathToConstruct;
+			father = father.parentFP;
+		}
+		path = pathToConstruct.split(",");
+		parentFP = null;
+		return this;
+	}
+	
+	
 
 	private static FlightPlan max;
 	public static FlightPlan calculate(List<Flight> flights) {
@@ -35,53 +46,19 @@ public class FlightPlan {
 		FlightPlan[] bestPaths = new FlightPlan[maxArrivee+1];
 		Arrays.fill(bestPaths, new FlightPlan(0, new String[0]));
 		
-		int flightIndex = 0;
 		for (int h = 1; h < maxArrivee+1; h++) {
-			List<Flight> arriveAtH = findFlightsArrivingAtH(h, flightIndex,flights);
-			flightIndex +=arriveAtH.size();
-			Flight bestFlightH = null;
-			int gainAtH = 0;
-			for(Flight flight : arriveAtH){
-				if(flight.PRIX+bestPaths[flight.DEPART].gain>gainAtH){
-					gainAtH = flight.PRIX+bestPaths[flight.DEPART].gain;
-					bestFlightH = flight;
+			while(!flights.isEmpty() && flights.get(0).arrivee()==h){
+				Flight flight = flights.remove(0);
+				if(flight.PRIX+bestPaths[flight.DEPART].gain>max.gain){
+					max = new FlightPlan(bestPaths[flight.DEPART], flight);
 				}
 			}
-			
 			bestPaths[h] = max;
-			if(bestFlightH!=null){
-				FlightPlan bestPathH = new FlightPlan(bestPaths[bestFlightH.DEPART], bestFlightH);
-				if(bestPathH.gain>max.gain){
-					max = bestPathH;
-					bestPaths[h] = bestPathH;
-				}
-			}
 		}
-		return max;
+		return max.calculatePath();
 		
 	}
 
-	private static List<Flight> findFlightsArrivingAtH(int h, int flightIndex,
-			List<Flight> flights) {
-		int toIndex = flightIndex;
-		boolean continueLoop = true;
-		while( continueLoop && toIndex<flights.size()){
-			Flight currentFlight = flights.get(toIndex);
-			if(currentFlight.arrivee()==h){
-				toIndex++;
-				continueLoop = true;
-			}else{
-				continueLoop = false;
-			}
-			
-			
-		}
-		return flights.subList(flightIndex, toIndex);
-	}
 	
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this).append(gain).append(path).toString();
-	}
 
 }

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 
+import com.bzn.codestory13.stepone.GoogleMail;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -34,7 +35,7 @@ public class Optimize extends HttpServlet{
 		System.out.println(result);
 		time = (System.nanoTime()-time)/1000000;
 		System.out.println("found in "+time+"ms");
-//		GoogleMail.SendForCodeStory("Jajascript request ",time+"ms  "+cacheHit+"\n"+jsonFlights+"\n\n\n"+ result);
+		GoogleMail.SendForCodeStory("Jajascript request ",time+"ms \n"+jsonFlights+"\n\n\n"+ result);
 		
 	}
 	

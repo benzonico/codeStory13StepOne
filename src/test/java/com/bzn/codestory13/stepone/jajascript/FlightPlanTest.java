@@ -60,10 +60,10 @@ public class FlightPlanTest {
 	@Test
 	public void optimizeShouldWorkWithLotOfFlights(){
 		List<Flight> flights = new ArrayList<Flight>();
-		int flightsNumber = 15;
+		int flightsNumber = 9000;
 		for (int i = 0; i < flightsNumber; i++) {
 			flights.add(new Flight("volA"+i, i, 1,1));
-			flights.add(new Flight("volB"+i, i, 1,1));
+			flights.add(new Flight("volB"+i, i, 1,0));
 		}
 		flightPlan = FlightPlan.calculate(flights);
 		assertThat(flightPlan.gain).isEqualTo(flightsNumber);
